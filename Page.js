@@ -1,3 +1,22 @@
+function checkOnline(){
+    setInterval(() => {
+        online();
+    }, 10);
+}
+
+function online(){
+    let ele=document.getElementById("checkOnline");
+    if (navigator.onLine) {
+        ele.style="display: none;";    
+        ele.innerHTML = "";
+
+    } 
+    else {
+        ele.style="display: block;";
+        ele.innerHTML = "You are offline. Please check your internet connection.";
+    }
+}
+
 var preview_flag = false;
         
         function save(){
@@ -10,7 +29,12 @@ var preview_flag = false;
                 localStorage.setItem('values', JSON.stringify(values));
                 console.log("Data saved in localStorage:", values);
                 clearInputs();
-            } else {
+            } 
+            else if(!preview_flag){
+                alert("Please enter a valid URL.");
+                return;                
+            }
+            else {
                 alert("Please enter a valid name.");
                 return;
             }
@@ -61,7 +85,7 @@ var preview_flag = false;
             // Populate the list with items name and image divs from localStorage
             values.forEach((item,index) => {
                 let listItem = document.createElement('div');
-                listItem.innerHTML = `<div class="item-${index%2==0?'even':'odd'}"><div class="item-name d-flex justify-content-center">${item.name}</div>
+                listItem.innerHTML = `<div class="py-3 item-${index%2==0?'even':'odd'}"><div class="item-name d-flex justify-content-center">${item.name}</div>
                                       <div class="d-flex justify-content-center""><div class="item-image" style="background-image: url('${item.url}');"></div>
                                       </div>
                                       </div>`;

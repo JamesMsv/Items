@@ -21,19 +21,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-...your-integrity-key..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-<body class="container p-3" onload="loadItems();">
-    <table>
-        <tr>
-            <td>Item Name</td><td><input type="text" id="textInput" class="form-control" placeholder="Enter item name"></td>
-        </tr>
-        <tr>
-           <td>Item Image URL</td><td><input type="url" onchange="setImagePreview(this.value);" id="imageInput" class="form-control" placeholder="Enter item image URL"></td>
-        </tr>
-    </table>
-    <div id="imagePreview" style="width: 90vw; height: 50vh; border: 1px solid #ccc;"></div> 
+<body class="" onload="loadItems();checkOnline();">
+    <div id="checkOnline" class="p-3"></div>
+    <div class="py-3">
+        <div class="d-flex align-items-center justify-content-between p-2">
+            <div>Item Name</div><div><input type="text" id="textInput" class="form-control" placeholder="Enter item name"></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between p-2">
+           <div>Item Image URL</div><div><input type="url" onchange="setImagePreview(this.value);" id="imageInput" class="form-control" placeholder="Enter item image URL"></div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div id="imagePreview" class="p-5" style="width: 90vw; height: 50vh; border: 1px solid #ccc;"></div> 
+    </div>
     <div class="d-flex justify-content-center mt-3">
         <button class="btn btn-primary mb-3" onclick="save();loadItems();"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Save</button>
-        <button class="btn btn-secondary mb-3 ms-2" onclick="clearLocalStorage();"><i class="fa-solid fa-broom"></i>&nbsp;Delete All</button>
+        <button class="btn btn-success mb-3 ms-2" onclick="clearLocalStorage();"><i class="fa-solid fa-broom"></i>&nbsp;Delete All</button>
     </div>
     <div id="listAllItems"></div>
     <style rel="stylesheet">
@@ -49,15 +52,30 @@
             background-color:rgb(168, 195, 223);
         }
         .item-even{
-            background-color:rgb(77, 129, 182);
+            background-color:rgb(129, 167, 206);
         }
         #imagePreview {
              background-size: cover;
             background-position: center;
             width: 90vw; 
             height: 50vh;
-            border: 1px solid #ccc;
+            border-style: dashed;
+            border: 2px;
+            border-color: red;
             border-radius: 5px;
+        }
+        #checkOnline{
+            width:100vw;
+            height: 100vh;
+            overflow:none;
+            position: absolute;
+            z-index:1000;
+            background-color: black;
+            color:white;
+            background-image: url("./offline.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
         }
     </style>
 </body>
