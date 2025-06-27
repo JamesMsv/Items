@@ -70,7 +70,32 @@ var preview_flag = false;
             loadItems(); // Refresh the list after clearing
         }
 
-         function loadItems() {
+        function deleteItem(index) {
+            let values = JSON.parse(localStorage.getItem('values')) || [];
+            if (index >= 0 && index < values.length) {
+                values.splice(index, 1); // Remove the item at the specified index
+                localStorage.setItem('values', JSON.stringify(values));
+                console.log("Item deleted:", values);
+                loadItems(); // Refresh the list after deletion
+            } else {
+                console.error("Invalid index for deletion:", index);
+            }
+        }
+
+        function editItem(index) {
+            let values = JSON.parse(localStorage.getItem('values')) || [];
+            if (index >= 0 && index < values.length) {
+                document.getElementById("textInput").value = values[index].name;
+                document.getElementById("imageInput").value = values[index].url;
+                setImagePreview(values[index].url);
+                // Remove the item from localStorage after editing
+                deleteItem(index);
+            } else {
+                console.error("Invalid index for editing:", index);
+            }
+        }
+
+        function loadItems() {
             let imagePreview = document.getElementById('imagePreview');
             imagePreview.style.backgroundImage = `url("https://demofree.sirv.com/nope-not-here.jpg")`;
             // Load existing values from localStorage
@@ -88,6 +113,11 @@ var preview_flag = false;
                 listItem.innerHTML = `<div class="py-3 item-${index%2==0?'even':'odd'}"><div class="item-name d-flex justify-content-center">${item.name}</div>
                                       <div class="d-flex justify-content-center""><div class="item-image" style="background-image: url('${item.url}');"></div>
                                       </div>
+                                    <div class="my-3 d-flex align-items-center justify-content-center">
+                                    <button onclick='editItem(${index})' class='btn btn-warning'><i class="fa fa-edit"></i></button>
+                                    &nbsp;
+                                    <button onclick='deleteItem(${index})' class='btn btn-danger'><i class="fa fa-trash"></i></button>
+        </div>
                                       </div>`;
                 listAllItems.appendChild(listItem);
             });
